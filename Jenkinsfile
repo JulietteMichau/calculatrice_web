@@ -7,11 +7,19 @@ pipeline {
                 
             }
         }
+
+        
         stage('Test') {
-            steps {
-                echo 'Exécution des tests...'               
+    steps {
+        script {
+            if (isUnix()) {
+                sh 'if [ -f index.html ]; then echo "index.html exists"; else echo "index.html does not exist" && exit 1; fi'
+            } else {
+                bat 'if exist index.html (echo index.html exists) else (echo index.html does not exist && exit /b 1)'
             }
         }
+    }
+}
       
        post {
         success {

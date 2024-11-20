@@ -1,27 +1,24 @@
 pipeline {
     agent any
+
     stages {
         stage('Build') {
             steps {
-                echo 'Compilation du projet...'
-                
+                echo 'Démarrage du build...'
             }
         }
 
-
         stage('Test') {
-    steps {
-        script {
-            def filExists = filExists('index.html')
-            if (filExists){
-                echo 'Le fichier index.html existe'
+            steps {
+                script {
+                    def fileExists = fileExists('index.html')
+                    if (fileExists) {
+                        echo 'Le fichier index.html existe.'
+                    } else {
+                        error('Erreur : Le fichier index.html est manquant.')
+                    }
+                }
             }
-            else{
-                error('Ereur: le fichier n existe pas')
-            }
-    }
-}
-      
-}
+        }
     }
 }
